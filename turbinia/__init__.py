@@ -31,7 +31,8 @@ app.conf.CELERY_ROUTES = {
     'turbinia.workers.be.BulkExtractorCalcOffsetsTask': {'queue': 'be-worker'},
     'turbinia.workers.be.BulkExtractorReducerTask': {'queue': 'be-worker'},
     'turbinia.workers.be.BulkExtractorTask': {'queue': 'be-worker'},
-    'turbinia.workers.plaso.PlasoTask': {'queue': 'plaso-worker'}
+    'turbinia.workers.plaso.PlasoTask': {'queue': 'plaso-worker'},
+    'turbinia.workers.plaso.PlasoDevTask': {'queue': 'plaso-worker-dev'}
 }
 app.conf.CELERY_ACCEPT_CONTENT = ['json']
 app.conf.CELERY_TASK_SERIALIZER = 'json'

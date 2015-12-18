@@ -46,3 +46,7 @@ class PlasoTask(TurbiniaTask):
             version=version, metadata=json.loads(metadata))
         result.add_result(result_type="PATH", result=res)
         return result.to_json()
+
+
+class PlasoDevTask(PlasoTask):
+    """Task to run Plaso (log2timeline)."""
