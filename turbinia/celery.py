@@ -24,6 +24,7 @@ from __future__ import unicode_literals
 import logging
 
 from six.moves import queue
+import sys
 
 import celery
 import kombu
@@ -105,6 +106,11 @@ class TurbiniaKombu(TurbiniaMessageBase):
         break
       except ChannelError:
         break
+      except:
+        e = sys.exc_info()[0]
+        log.warning('Caught exception while fetching from queue: {0:s}'.format(str(e)))
+        break
+
 
     log.debug('Received {0:d} messages'.format(len(requests)))
     return requests
