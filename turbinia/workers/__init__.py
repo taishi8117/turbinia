@@ -224,7 +224,7 @@ class TurbiniaTaskResult(object):
       TurbiniaTaskResult: Deserialized object.
     """
     result = TurbiniaTaskResult(None, mock=True)
-    result.__dict__ = input_dict
+    result.__dict__.update(input_dict)
     result.run_time = timedelta(
         seconds=result.run_time) if result.run_time else None
     result.start_time = datetime.strptime(
