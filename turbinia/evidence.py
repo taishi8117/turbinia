@@ -23,6 +23,7 @@ import sys
 from turbinia import config
 from turbinia import TurbiniaException
 from turbinia.processors import mount_local
+from turbinia.processors import volatility
 
 # pylint: disable=keyword-arg-before-vararg
 
@@ -315,3 +316,21 @@ class ExportedFileArtifact(Evidence):
     super(ExportedFileArtifact, self).__init__()
     self.artifact_name = artifact_name
     self.copyable = True
+
+
+class RawMemory(Evidence):
+    """Evidence object for Memory based evidence.
+
+     Attributes:
+        tbc
+    """
+    def __init__(self, profile=None, module=None, *args, **kwargs):
+        """Initialization for raw memory evidence object."""
+        super(RawMemory, self).__init__(*args, **kwargs)
+        self.profile = profile
+        self.module = 'mac_pslist'
+        # TODO: Fix why argparse doesn't provide a list of
+        # self.module = module
+
+
+        print(self.module)
