@@ -199,7 +199,7 @@ def main():
       '-n', '--name', help='Descriptive name of the evidence', required=False)
   parser_rawmemory.add_argument(
       '-m', '--module', nargs='+', help='Volatility module to execute',
-      required=False)
+      required=True)
 
   # List Jobs
   subparsers.add_parser('listjobs', help='List all available jobs')

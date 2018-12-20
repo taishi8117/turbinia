@@ -22,14 +22,11 @@ from turbinia.jobs import interface
 from turbinia.jobs import manager
 from turbinia.workers.volatility import VolatilityTask
 
-ACCESS_LOG_ARTIFACTS = [
-    'DockerContainerLogs', 'NginxAccessLogs', 'ApacheAccessLogs'
-]
 
 class VolatilityJob(interface.TurbiniaJob):
     """Volatility analysis job.
 
-    This will execute volatility against a peice of evidence.
+    This will execute volatility against a piece of evidence.
     """
 
     evidence_input = [RawMemory]
@@ -46,16 +43,13 @@ class VolatilityJob(interface.TurbiniaJob):
         Returns:
             A list of tasks to schedule.
         """
+
         tasks = []
-        """
         for evidence_item in evidence:
             for mod in evidence_item.module:
+                print('mod: {0:s}'.format(mod))
                 tasks.append(VolatilityTask(mod))
-        """
-        for artifact_name in ACCESS_LOG_ARTIFACTS:
-          tasks.extend([
-              VolatilityTask(artifact_name) for _ in evidence
-          ])
+
         return tasks
 
 manager.JobsManager.RegisterJob(VolatilityJob)

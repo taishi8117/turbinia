@@ -324,13 +324,9 @@ class RawMemory(Evidence):
      Attributes:
         tbc
     """
-    def __init__(self, profile=None, module=None, *args, **kwargs):
+    def __init__(self, module=None, profile=None, *args, **kwargs):
         """Initialization for raw memory evidence object."""
         super(RawMemory, self).__init__(*args, **kwargs)
         self.profile = profile
-        self.module = 'mac_pslist'
-        # TODO: Fix why argparse doesn't provide a list of
-        # self.module = module
-
-
-        print(self.module)
+        self.module = module
+        # TODO: Handle module enumeration if no module is provided
