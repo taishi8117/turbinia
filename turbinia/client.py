@@ -92,9 +92,9 @@ def task_decode(task_dict):
   task_dict = task_dict
   type_ = task_dict['name']
   task = getattr(sys.modules[__name__], type_)()
-  task.__dict__ == task_dict
+  task.__dict__.update(task_dict)
   task.output_manager = output_manager.OutputManager()
-  task.output_manager.__dict__ = task_dict['output_manager']
+  task.output_manager.__dict__.update(task_dict['output_manager'])
   task.last_update = datetime.strptime(
       task_dict['last_update'], '%Y-%m-%d %H:%M:%S.%f')
   return task
