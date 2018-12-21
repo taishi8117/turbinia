@@ -319,14 +319,15 @@ class ExportedFileArtifact(Evidence):
 
 
 class RawMemory(Evidence):
-    """Evidence object for Memory based evidence.
+  """Evidence object for Memory based evidence.
 
      Attributes:
         tbc
     """
-    def __init__(self, module=None, profile=None, *args, **kwargs):
-        """Initialization for raw memory evidence object."""
-        super(RawMemory, self).__init__(*args, **kwargs)
-        self.profile = profile
-        self.module = module
-        # TODO: Handle module enumeration if no module is provided
+
+  def __init__(self, module=None, profile=None, *args, **kwargs):
+    """Initialization for raw memory evidence object."""
+    super(RawMemory, self).__init__(*args, **kwargs)
+    self.profile = profile
+    self.module = module
+    # TODO: Handle module enumeration if no module is provided

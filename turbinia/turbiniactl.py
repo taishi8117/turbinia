@@ -320,11 +320,11 @@ def main():
         embedded_path=args.embedded_path, mount_partition=args.mount_partition,
         project=args.project, zone=args.zone, source=args.source)
   elif args.command == 'rawmemory':
-      args.name = args.name if args.name else args.local_path
-      local_path = os.path.abspath(args.local_path)
-      evidence_ = evidence.RawMemory(
-          name=args.name, local_path=local_path, profile=args.profile,
-          module=args.module)
+    args.name = args.name if args.name else args.local_path
+    local_path = os.path.abspath(args.local_path)
+    evidence_ = evidence.RawMemory(
+        name=args.name, local_path=local_path, profile=args.profile,
+        module=args.module)
   elif args.command == 'psqworker':
     # Set up root logger level which is normally set by the psqworker command
     # which we are bypassing.

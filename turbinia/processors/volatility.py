@@ -24,11 +24,12 @@ from turbinia import TurbiniaException
 
 log = logging.getLogger('turbinia')
 
-def PreprocessProfile(local_path):
-    """Executes volatility to determine the appropiate profile"""
 
-    return 'WinXPSP2x86'
-    """
+def PreprocessProfile(local_path):
+  """Executes volatility to determine the appropiate profile"""
+
+  return 'WinXPSP2x86'
+  """
     # TODO: Make this configurable depending on install
     vol_cmd = ['python2', '/bin/vol', '-f', local_path, 'imageinfo']
     log.info('Running command {0:s}'.format(' '.join(vol_cmd)))
@@ -51,9 +52,10 @@ def PreprocessProfile(local_path):
     return profile
     """
 
+
 def PreprocessModules(self):
-    # Mac profiles (^mac_\S*)
-    """
+  # Mac profiles (^mac_\S*)
+  """
     if self.profile.startswith('Mac'):
         vol_cmd = ['python2', '/bin/vol', '--info']
         vol_out = subprocess.check_output(vol_cmd)

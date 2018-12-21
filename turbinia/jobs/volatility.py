@@ -47,9 +47,7 @@ class VolatilityJob(interface.TurbiniaJob):
         tasks = []
         for evidence_item in evidence:
             for mod in evidence_item.module:
-                print('mod: {0:s}'.format(mod))
                 tasks.append(VolatilityTask(mod))
-
         return tasks
 
 manager.JobsManager.RegisterJob(VolatilityJob)
