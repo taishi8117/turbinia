@@ -23,6 +23,7 @@ import sys
 from turbinia import config
 from turbinia import TurbiniaException
 from turbinia.processors import mount_local
+from turbinia.processors import volatility
 
 # pylint: disable=keyword-arg-before-vararg
 
@@ -307,6 +308,21 @@ class FilteredTextFile(TextFile):
   pass
 
 
+class VolatilityOutput(TextFile):
+    """Volatility output file data.
+
+      Attributes:
+        profile: Profile used for the analysis in str
+        module: Module used for the analysis in str
+
+    """
+
+    def __init__(self, profile, module, *args, **kwargs):
+      super(VolatilityOutput, self).__init__(*args, **kwargs)
+      self.profile = profile
+      self.module = module
+
+
 class ExportedFileArtifact(Evidence):
   """Exported file artifact."""
 
@@ -315,3 +331,18 @@ class ExportedFileArtifact(Evidence):
     super(ExportedFileArtifact, self).__init__()
     self.artifact_name = artifact_name
     self.copyable = True
+
+
+class RawMemory(Evidence):
+  """Evidence object for Memory based evidence.
+
+     Attributes:
+        tbc
+    """
+
+  def __init__(self, module=None, profile=None, *args, **kwargs):
+    """Initialization for raw memory evidence object."""
+    super(RawMemory, self).__init__(*args, **kwargs)
+    self.profile = profile
+    self.module = module
+    # TODO: Handle module enumeration if no module is provided
