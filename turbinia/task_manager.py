@@ -337,7 +337,7 @@ class CeleryTaskManager(BaseTaskManager):
         'Adding Celery task {0:s} with evidence {1:s} to queue'.format(
             task.name, evidence_.name))
     task.stub = task_runner.apply_async((task.serialize(), evidence_.__dict__),
-                                        expiration=86400)  # 24 hours
+                                        expiration=86400, lease_duration_secs=86400)  # 24 hours
 
 
 class PSQTaskManager(BaseTaskManager):
