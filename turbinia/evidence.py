@@ -314,10 +314,9 @@ class VolatilityOutput(TextFile):
       Attributes:
         profile: Profile used for the analysis in str
         module: Module used for the analysis in str
-
     """
 
-    def __init__(self, profile, module, *args, **kwargs):
+    def __init__(self, profile=None, module=None, *args, **kwargs):
       super(VolatilityOutput, self).__init__(*args, **kwargs)
       self.profile = profile
       self.module = module
