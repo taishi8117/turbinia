@@ -1,14 +1,5 @@
 filelock
-# google-api-core>=1.2.1,<=1.4.0
-# google-cloud-datastore==1.7.0
-# google-api-python-client>=1.6.2
-# google-cloud-pubsub==0.35.4
-# google-cloud-storage
-# google-cloud-core
-# oauth2client
-# psq
 six
-# urllib3[secure]
 celery~=4.1
 kombu~=4.1
 redis~=2.10
