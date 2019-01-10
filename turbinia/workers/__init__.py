@@ -27,6 +27,7 @@ import pprint
 import subprocess
 import traceback
 import uuid
+import turbinia
 
 import filelock
 
@@ -81,7 +82,7 @@ class TurbiniaTaskResult(object):
       return
     self.closed = False
     self.evidence = evidence if evidence else []
-    self.input_evidence = input_evidence if input_evidence else []
+    self.input_evidence = input_evidence
     self.id = uuid.uuid4().hex
     self.task_id = task.id
     self.task_name = task.name
@@ -139,18 +140,17 @@ class TurbiniaTaskResult(object):
       if not evidence.request_id:
         evidence.request_id = self.request_id
 
-    for evidence in self.input_evidence:
-      try:
-        evidence.postprocess()
-      # Adding a broad exception here because we want to try post-processing
-      # to clean things up even after other failures in the task, so this could
-      # also fail.
-      # pylint: disable=broad-except
-      except Exception as e:
-        msg = 'Evidence post-processing for {0:s} failed: {1!s}'.format(
-            evidence.name, e)
-        log.error(msg)
-        self.log(msg)
+    try:
+      self.input_evidence.postprocess()
+    # Adding a broad exception here because we want to try post-processing
+    # to clean things up even after other failures in the task, so this could
+    # also fail.
+    # pylint: disable=broad-except
+    except Exception as e:
+      msg = 'Evidence post-processing for {0:s} failed: {1!s}'.format(
+          self.input_evidence.name, e)
+      log.error(msg)
+      self.log(msg)
 
     # Write result log info to file
     logfile = os.path.join(self.output_dir, 'worker-log.txt')
@@ -188,6 +188,8 @@ class TurbiniaTaskResult(object):
     # automatically, but the real fix is to attach this to a separate object.
     # See https://github.com/google/turbinia/issues/211 for more details.
     evidence.config = evidence_config
+    if evidence.context_dependent:
+      evidence.parent_evidence = self.input_evidence
 
     self.evidence.append(evidence)
 
@@ -281,6 +283,7 @@ class TurbiniaTask(object):
     self.state_key = None
     self.stub = None
     self.tmp_dir = None
+    self.turbinia_version = turbinia.__version__
     self.user = user if user else getpass.getuser()
     self._evidence_config = {}
 
@@ -385,7 +388,7 @@ class TurbiniaTask(object):
     self.tmp_dir, self.output_dir = self.output_manager.get_local_output_dirs()
     if not self.result:
       self.result = TurbiniaTaskResult(
-          task=self, input_evidence=[evidence],
+          task=self, input_evidence=evidence,
           base_output_dir=self.base_output_dir, request_id=self.request_id)
 
     if not self.run_local:
@@ -484,6 +487,18 @@ class TurbiniaTask(object):
       try:
         self.result = self.setup(evidence)
         original_result_id = self.result.id
+
+        if self.turbinia_version != turbinia.__version__:
+          msg = 'Worker V-{0:s} and server V-{1:s} version do not match'.format(
+            self.turbinia_version,
+            turbinia.__version__
+          )
+          log.error(msg)
+          self.result.log(msg)
+          self.result.set_error(msg)
+          self.result.status = msg
+          return self.result
+
         self._evidence_config = evidence.config
         self.result = self.run(evidence, self.result)
       # pylint: disable=broad-except
