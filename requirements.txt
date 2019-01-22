@@ -1,5 +1,5 @@
 filelock
 six
-celery~=4.1
-kombu~=4.1
-redis~=2.10
+celery
+kombu
+redis

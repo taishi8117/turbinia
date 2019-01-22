@@ -68,7 +68,7 @@ setup(
     ],
     extras_require={
         'dev': ['mock', 'nose'],
-        'local': ['celery~=4.1', 'kombu~=4.1', 'redis~=2.10'],
+        'local': ['celery', 'kombu', 'redis'],
         'worker': ['plaso>=20171118']
     }
 )
