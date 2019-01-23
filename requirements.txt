@@ -1,5 +1,0 @@
-filelock
-six
-celery
-kombu
-redis
