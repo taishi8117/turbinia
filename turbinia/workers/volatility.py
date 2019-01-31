@@ -45,7 +45,7 @@ class VolatilityTask(TurbiniaTask):
     output_evidence.local_path = output_file_path
 
     # TODO: Add in config options for Turbinia
-    cmd = 'python2 /bin/vol --plugins=/evidence/plugins -f {0:s} --profile={1:s} {2:s} \
+    cmd = 'vol.py --plugins=/evidence/plugins -f {0:s} --profile={1:s} {2:s} \
             --output=json --output-file={3:s}'.format(
         evidence.local_path, evidence.profile, self.module, output_file_path)
     result.log('Running vol as [{0:s}]'.format(cmd))
