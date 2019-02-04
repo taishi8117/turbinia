@@ -211,7 +211,7 @@ class TurbiniaTaskResult(object):
     """
     self.run_time = self.run_time.total_seconds() if self.run_time else None
     self.start_time = str(self.start_time)
-    self.input_evidence = [x.serialize() for x in self.input_evidence]
+    self.input_evidence = self.input_evidence.serialize()
     self.evidence = [x.serialize() for x in self.evidence]
     return self.__dict__
 
@@ -231,7 +231,7 @@ class TurbiniaTaskResult(object):
         seconds=result.run_time) if result.run_time else None
     result.start_time = datetime.strptime(
         result.start_time, '%Y-%m-%d %H:%M:%S.%f')
-    result.input_evidence = [evidence_decode(x) for x in result.input_evidence]
+    result.input_evidence = evidence_decode(result.input_evidence)
     result.evidence = [evidence_decode(x) for x in result.evidence]
 
     return result
